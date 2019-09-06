@@ -7,20 +7,31 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import HomeScreen from '../screens/home-screen';
 import LoginScreen from '../screens/login-screen';
+import RoomsScreen from '../screens/rooms-screen';
 
-const HomeStack = createStackNavigator({
+const LoginStack = createSwitchNavigator({
+  Login: {
+    screen: LoginScreen,
+  }
+})
+
+const MainScreen = createBottomTabNavigator({
+  Rooms: RoomsScreen,
+})
+
+const HomeStack = createSwitchNavigator({
   Home: {
     screen: HomeScreen,
   },
   Login: {
-    screen: LoginScreen,
+    screen: LoginStack,
+  },
+  Main: {
+    screen: MainScreen
   }
 });
 
-const BottomStack = createBottomTabNavigator({
-  Home: HomeStack,
-})
 
-const Navigator = createAppContainer(BottomStack)
+const Navigator = createAppContainer(HomeStack)
 
 export default Navigator;
