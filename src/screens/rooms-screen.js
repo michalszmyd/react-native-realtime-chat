@@ -1,32 +1,31 @@
 import React, { Component } from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
+import { View, Text } from 'react-native';
 
-import RoomsService from '../services/rooms-service';
+import Rooms from '../components/rooms/rooms';
 
 class RoomsScreen extends Component {
-  state = {
-    rooms: []
-  }
-
-  componentDidMount() {
-    AsyncStorage.getItem('authenticateToken').then(token => {
-      RoomsService.all(token).then(rooms => {
-        this.setState({
-          rooms
-        });
-      })
-    })
+  onRoomChange = (roomId) => {
+    this.props.navigation.navigate('Room', { id: roomId })
   }
 
   render() {
-    const { rooms } = this.state;
-
     return (
-      <View>
-        <Text>Hello from rooms</Text>
-        <Text>{JSON.stringify(rooms)}</Text>
+      <View style={styles.container}>
+        <Text style={styles.header}>Rooms</Text>
+        <Rooms onRoomPress={this.onRoomChange} />
       </View>
     )
+  }
+}
+
+const styles = {
+  container: {
+    flex: 1,
+  },
+  header: {
+    padding: 15,
+    fontSize: 24,
+    fontWeight: '600',
   }
 }
 

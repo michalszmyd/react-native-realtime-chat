@@ -6,12 +6,8 @@ class HomeScreen extends Component {
     AsyncStorage.getItem('authenticateToken').then(token => {
       const { navigate } = this.props.navigation;
 
-      if (token) {
-        alert(`Logged in ${token}`);
-        navigate('Main');
-      } else {
-        navigate('Login');
-      }
+      if (token) navigate('Main');
+      else navigate('Login');
     })
   }
   

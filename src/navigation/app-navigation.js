@@ -8,15 +8,25 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import HomeScreen from '../screens/home-screen';
 import LoginScreen from '../screens/login-screen';
 import RoomsScreen from '../screens/rooms-screen';
+import RoomScreen from '../screens/room-screen';
 
-const LoginStack = createSwitchNavigator({
+const LoginSwitches = createSwitchNavigator({
   Login: {
     screen: LoginScreen,
   }
 })
 
+const RoomsStack = createStackNavigator({
+  Rooms: {
+    screen: RoomsScreen
+  },
+  Room: {
+    screen: RoomScreen
+  }
+})
+
 const MainScreen = createBottomTabNavigator({
-  Rooms: RoomsScreen,
+  Rooms: RoomsStack,
 })
 
 const HomeStack = createSwitchNavigator({
@@ -24,7 +34,7 @@ const HomeStack = createSwitchNavigator({
     screen: HomeScreen,
   },
   Login: {
-    screen: LoginStack,
+    screen: LoginSwitches,
   },
   Main: {
     screen: MainScreen
