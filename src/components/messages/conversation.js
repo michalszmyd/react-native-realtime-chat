@@ -3,12 +3,14 @@ import { ScrollView } from 'react-native';
 import Message from './message';
 
 class Conversation extends Component {
-  componentDidMount() {
-    this.conversation.scrollToEnd()
+  componentDidUpdate() {
+    this.moveToBottom()
   }
 
-  componentDidUpdate() {
-    this.conversation.scrollToEnd()
+  moveToBottom = () => {
+    if (!this.conversation) return;
+
+    this.conversation.scrollToEnd({ animated: false })
   }
 
   render() {
@@ -16,9 +18,11 @@ class Conversation extends Component {
 
     return (
       <ScrollView
+        snapToEnd={true}
         ref={(conversation) => {
-          this.conversation = conversation
+          this.conversation = conversation;
         }}
+        onContentSizeChange={this.moveToBottom}
         style={styles.container}>
         {messages.map(message => (
           <Message
