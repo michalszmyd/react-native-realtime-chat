@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { AsyncStorage, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 
 import UsersService from '../services/users-service';
+import CurrentUser from '../helpers/current-user';
 
 class LoginScreen extends Component {
   state = {
@@ -17,14 +18,13 @@ class LoginScreen extends Component {
     this.setState({ password })
   }
 
-  onSubmit = () => {
+  onSubmit = async () => {
     const { email, password } = this.state;
 
-    UsersService.signIn({ email, password }).then(token => {
-      AsyncStorage.setItem('authenticateToken', token).then(() => {
-        this.props.navigation.navigate('Home')
-      })
-    })
+    const user = await UsersService.signIn({ email, password });
+    await CurrentUser.assign(user);
+
+    this.props.navigation.navigate('Home');
   }
 
   render() {

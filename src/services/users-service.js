@@ -1,4 +1,5 @@
 import ApiService from './api-service';
+import UserModel from '../models/user-model';
 
 class UsersService {
   static async signIn({ email, password }) {
@@ -11,7 +12,7 @@ class UsersService {
       url: 'authentications',
       body: JSON.stringify(body),
     }).then((attributes) => {
-      return attributes.authentication_token;
+      return new UserModel(attributes);
     })
   }
 }

@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import { Text, View, AsyncStorage } from 'react-native';
+import { Text, View } from 'react-native';
+import CurrentUser from '../helpers/current-user';
 
 class HomeScreen extends Component {
-  componentDidMount() { 
-    AsyncStorage.getItem('authenticateToken').then(token => {
+  componentDidMount() {
+    CurrentUser.get().then(user => {
       const { navigate } = this.props.navigation;
 
-      if (token) navigate('Main');
+      if (user.token) navigate('Main');
       else navigate('Login');
     })
   }
-  
+
   render() {
     return (
       <View>

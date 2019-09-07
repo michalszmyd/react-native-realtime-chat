@@ -1,31 +1,39 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+
+import Conversation from '../messages/conversation';
+import RoomsService from '../../services/rooms-service';
+
+import CurrentUser from '../../helpers/current-user';
 
 class Room extends Component {
-  onRoomSelect = () => {
-    const { id, onRoomPress } = this.props;
+  state = {
+    messages: [],
+  }
 
-    onRoomPress(id);
+  componentDidMount() {
+    const { roomId } = this.props;
+
+    CurrentUser.get().then(user => {
+      const { id, token } = user;
+
+      RoomsService.messages({ id: roomId, token }).then(messages => {
+        this.setState({
+          messages,
+          currentUserId: id,
+        });
+      })
+    })
   }
 
   render() {
-    const { name, description } = this.props;
-    
-    return (
-      <TouchableOpacity onPress={this.onRoomSelect} style={styles.container}>
-        <Text style={styles.title}>{name}</Text>
-        <Text>{description}</Text>
-      </TouchableOpacity>
-    )
-  }
-}
+    const { messages, currentUserId } = this.state;
 
-const styles = {
-  container: {
-    padding: 15,
-  },
-  title: {
-    fontSize: 16,
+    return (
+      <Conversation
+        currentUserId={currentUserId}
+        messages={messages}
+      />
+    )
   }
 }
 

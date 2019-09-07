@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { AsyncStorage, ScrollView, RefreshControl } from 'react-native';
+import { ScrollView, RefreshControl } from 'react-native';
 
 import RoomsService from '../../services/rooms-service';
-import Room from './room';
+import Room from './item';
+
+import CurrentUser from '../../helpers/current-user';
 
 class Rooms extends Component {
   state = {
@@ -16,7 +18,9 @@ class Rooms extends Component {
   }
 
   fetchRooms = (additionalState = {}) => {
-    AsyncStorage.getItem('authenticateToken').then(token => {
+    CurrentUser.get().then(user => {
+      const { token } = user;
+
       RoomsService.all(token).then(rooms => {
         this.setState({
           rooms,
@@ -54,7 +58,7 @@ class Rooms extends Component {
             refreshing={refreshing}
             onRefresh={this.onRefresh}
           />
-        }  
+        }
       >
         {/* <SearchBar /> */}
         {filteredRooms.map(room => (

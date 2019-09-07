@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, AsyncStorage } from 'react-native';
 
-import Rooms from '../components/rooms/rooms';
+import Rooms from '../components/rooms/list';
 
 class RoomsScreen extends Component {
   onRoomChange = (roomId) => {
