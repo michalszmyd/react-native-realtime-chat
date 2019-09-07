@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import React, { Component, Fragment } from 'react';
+import { Text } from 'react-native';
 
 import Room from '../components/rooms/room';
 
@@ -18,13 +18,13 @@ class RoomScreen extends Component {
     const { id } = this.state;
 
     return (
-      <View style={{flex:1}}>
+      <Fragment>
         <Text style={styles.header}>Group chat</Text>
         { id ?
           <Room roomId={id} /> :
           <Text>Loading...</Text>
         }
-      </View>
+      </Fragment>
     )
   }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View, KeyboardAvoidingView, TextInput } from 'react-native';
 import Message from './message';
 
 class Conversation extends Component {
@@ -39,6 +39,7 @@ class Conversation extends Component {
 const styles = {
   container: {
     padding: 15,
+    flex: 1,
   }
 }
 

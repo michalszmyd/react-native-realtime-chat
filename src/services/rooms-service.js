@@ -2,6 +2,7 @@ import ApiService from './api-service';
 
 import RoomModel from '../models/room-model';
 import MessageModel from '../models/message-model';
+import CurrentUser from '../helpers/current-user';
 
 class RoomsService {
   static all(token) {
@@ -29,6 +30,16 @@ class RoomsService {
     }).then(messages => (
       messages.map(message => new MessageModel(message))
     ))
+  }
+
+  static async sendMessage({ roomId, body }) {
+    user = await CurrentUser.get();
+
+    return ApiService.post({
+      url: `rooms/${roomId}/messages`,
+      authToken: user.token,
+      body: JSON.stringify({ body })
+    }).then(message => new MessageModel(message))
   }
 }
 

@@ -35,8 +35,7 @@ class Message extends Component {
 
 const globalStyles = {
   message: {
-    marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 25,
   },
   body: {
     paddingTop: 12,

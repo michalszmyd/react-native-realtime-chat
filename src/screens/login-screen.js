@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { KeyboardAvoidingView, Text, TextInput, TouchableOpacity } from 'react-native';
 
 import UsersService from '../services/users-service';
 import CurrentUser from '../helpers/current-user';
@@ -31,7 +31,7 @@ class LoginScreen extends Component {
     const { email, password } = this.state;
 
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}>
         <Text style={styles.header}>Log in</Text>
         <TextInput
           style={styles.input}
@@ -53,7 +53,7 @@ class LoginScreen extends Component {
         <TouchableOpacity style={styles.button} onPress={this.onSubmit}>
           <Text style={styles.buttonText}>Log in</Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
