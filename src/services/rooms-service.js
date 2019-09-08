@@ -23,17 +23,19 @@ class RoomsService {
     ))
   }
 
-  static messages({ id, token }) {
+  static async messages({ id, token }) {
+    const user = await CurrentUser.get();
+
     return ApiService.get({
       url: `rooms/${id}/messages`,
-      authToken: token,
+      authToken: user.token,
     }).then(messages => (
       messages.map(message => new MessageModel(message))
     ))
   }
 
   static async sendMessage({ roomId, body }) {
-    user = await CurrentUser.get();
+    const user = await CurrentUser.get();
 
     return ApiService.post({
       url: `rooms/${roomId}/messages`,

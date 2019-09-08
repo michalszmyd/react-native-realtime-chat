@@ -3,6 +3,7 @@ import { KeyboardAvoidingView } from 'react-native';
 
 import Conversation from '../messages/conversation';
 import RoomsService from '../../services/rooms-service';
+import RoomWebsocketService from '../../services/room-websocket-service';
 import CurrentUser from '../../helpers/current-user';
 
 import MessageForm from '../forms/message-form';
@@ -23,18 +24,39 @@ class Room extends Component {
           messages,
           currentUserId: id,
         });
-      })
+      });
+
+      this.initializeWebsocket();
     })
+  }
+
+  componentWillUnmount() {
+    this.websocket.disconnect();
+  }
+
+  initializeWebsocket = () => {
+    const { props: { roomId }, pushMessage } = this;
+
+    this.websocket = new RoomWebsocketService(
+      roomId,
+      pushMessage
+    );
+  }
+
+  pushMessage = (message) => {
+    const { roomId } = this.props;
+
+    if (message.roomId === roomId) {
+      this.setState((state) => (
+        { messages: state.messages.concat(message) }
+      ))
+    }
   }
 
   sendMessage = (attributes) => {
     RoomsService.sendMessage({
       roomId: this.props.roomId,
       ...attributes,
-    }).then(message => {
-      this.setState({
-        messages: this.state.messages.concat([message])
-      })
     })
   }
 

@@ -2,8 +2,11 @@ import React, { Component, Fragment } from 'react';
 import { Text } from 'react-native';
 
 import Room from '../components/rooms/room';
+import GlobalContext from '../contexts/global-context';
 
 class RoomScreen extends Component {
+  static contextType = GlobalContext;
+
   state = {
     id: null,
   }
